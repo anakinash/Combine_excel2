@@ -2,9 +2,10 @@ import openpyxl
 from openpyxl import Workbook
 import os, fnmatch
 
-startnum=input("Starting value")
-endnum=input("Ending value")
-chnum=input("Select channel")+1
+startnum=input("Starting value ")
+endnum=input("Ending value ")
+chnum=input("Select channel ")+1
+skip_dist=input("Enter skip distance ")
 ctr=startnum
 
 def find(pattern):
@@ -38,7 +39,7 @@ for i in range(4,38,1):
 
 startrange=2
 endrange=startrange+((endnum-startnum)/10)+1
-for j in range(startrange,endrange,1):
+for j in range(startrange,endrange,skip_dist/10):
     file1 = str(ctr) + '*.xlsx'
     filename = find(file1)
     wb1 = openpyxl.load_workbook(filename)
@@ -53,7 +54,7 @@ for j in range(startrange,endrange,1):
         Comb_sheet.cell(row=i, column=j).value = rowsel[countrow]
         countrow += 1
 
-    ctr += 10
+    ctr += skip_dist
 
 savefilename=str(ws1.cell(row=5, column=chnum).value)+'.xlsx'
 combined.save(savefilename)
